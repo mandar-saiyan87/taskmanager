@@ -1,10 +1,11 @@
 import React from 'react'
+import HomePage from './pages/HomePage'
 
 function App() {
 
   return (
     <>
-      <div className='text-red-500'>React App</div>
+      <HomePage />
     </>
   )
 }

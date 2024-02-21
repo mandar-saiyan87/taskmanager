@@ -8,7 +8,7 @@ export const getAlltasks = createAsyncThunk("getAllTasks", async () => {
 })
 
 export const taskSlice = createSlice({
-  name: 'tasks',
+  name: 'task',
   initialState: {
     tasks: [],
     loading: false,
@@ -28,3 +28,5 @@ export const taskSlice = createSlice({
       })
   }
 })
+
+export default taskSlice.reducer
