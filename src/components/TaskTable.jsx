@@ -91,10 +91,10 @@ function TaskTable({ tableData }) {
       const newData = data.filter((task) => (
         task.status === cstate
       ))
-      setCurrentData(newData)
+      setCurrentData([...newData])
     }
     else {
-      setCurrentData(tableData)
+      setCurrentData([...data])
     }
   }
 
