@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Whisper, IconButton, Popover, Dropdown } from 'rsuite';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import { format } from 'date-fns'
@@ -53,20 +53,28 @@ const ActionCell = ({ rowData, dataKey, ...props }) => {
 
 function TaskTable({ tableData }) {
 
-  const data = tableData
+  let data = tableData
 
+  const [currentData, setCurrentData] = useState([...data])
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState('All')
+
 
   const getData = () => {
     if (sortColumn && sortType) {
-      return data.sort((a, b) => {
-        console.log(new Date(a[sortColumn]))
+      return currentData.sort((a, b) => {
+        const dateA = new Date(a[sortColumn]);
+        const dateB = new Date(b[sortColumn]);
+        if (sortType === 'asc') {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
       })
     }
-
-    return data;
+    return currentData;
   };
 
   const handleSortColumn = (sortColumn, sortType) => {
@@ -78,10 +86,38 @@ function TaskTable({ tableData }) {
     }, 500);
   };
 
+  function setStatusData(cstate) {
+    if (cstate !== 'All') {
+      const newData = data.filter((task) => (
+        task.status === cstate
+      ))
+      setCurrentData(newData)
+    }
+    else {
+      setCurrentData(tableData)
+    }
+  }
+
 
   return (
     <>
       <div>
+        <div className='flex items-center mb-7 gap-4'>
+          <p>Status:</p>
+          <Dropdown title={currentStatus} onSelect={(e) => {
+            setCurrentStatus(e)
+            setStatusData(e)
+          }}>
+            <Dropdown.Item eventKey={"All"}>All</Dropdown.Item>
+            <Dropdown.Item eventKey={"todo"}>todo</Dropdown.Item>
+            <Dropdown.Item eventKey={"pending"}>pending</Dropdown.Item>
+            <Dropdown.Item eventKey={"in progress"}>in progress</Dropdown.Item>
+            <Dropdown.Item eventKey={"completed"}>completed</Dropdown.Item>
+            <Dropdown.Item eventKey={"bug"}>bug</Dropdown.Item>
+            <Dropdown.Item eventKey={"blocked"}>blocked</Dropdown.Item>
+          </Dropdown>
+        </div>
+
         <Table
           height={450}
           data={getData()}
@@ -119,7 +155,7 @@ function TaskTable({ tableData }) {
             <DateCell dataKey="due_date" />
           </Column>
 
-          <Column width={250} resizable>
+          <Column width={150} resizable>
             <HeaderCell>
             </HeaderCell>
             <ActionCell dataKey="id" />
