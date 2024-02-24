@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import Spinner from '../components/Spinner'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAlltasks } from "../store/taskSlice"
+import { getAlltasks, rstMsgErr } from "../store/taskSlice"
 import TaskTable from '../components/TaskTable'
 import TaskModal from '../components/TaskModal'
 
 function HomePage() {
 
   const data = useSelector((state) => state.task)
+  // console.log(data)
   const dispatch = useDispatch()
 
   const [taskModal, setTaskModal] = useState(false)
 
   useEffect(() => {
     dispatch(getAlltasks())
-  }, [])
+    setTimeout(() => {
+      dispatch(rstMsgErr())
+    }, 2000);
+  }, [dispatch])
 
   return (
     <>
@@ -28,14 +32,14 @@ function HomePage() {
           </div>
           }
           {!data.loading && data.error ? <div>{data.error.message}</div> : null}
-          {!data.loading && !data.error && data.tasks.taskList?.length > 0 ?
+          {!data.loading && !data.error && data.tasks?.length > 0 ?
             (
-              <TaskTable tableData={data.tasks.taskList} />
+              <TaskTable tableData={data.tasks} />
             )
-            : data.tasks.taskList?.length === 0 && <div>No tasks to display for now!</div>
+            : data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
           }
         </div>
-        {taskModal && <TaskModal open={taskModal} handleClose={setTaskModal}/>}
+        {taskModal && <TaskModal open={taskModal} handleClose={setTaskModal} />}
 
       </div>
     </>

@@ -32,10 +32,10 @@ router.post('', async (req, res) => {
     const newtask = req.body
     const task = await sql`insert into tskmgr.tasks (title, description, start_date, due_date, status) 
         values (${newtask.title}, ${newtask.description}, ${newtask.start_date}, ${newtask.due_date}, ${newtask.status})
-        returning id, title
+        returning *
         `
     if (task[0].id) {
-      res.status(200).json({ 'code': 200, 'msg': 'New task created successfully' })
+      res.status(200).json({ 'code': 200, 'msg': 'New task created successfully', 'newtask': task[0] })
     }
   } catch (error) {
     console.log(error.message);

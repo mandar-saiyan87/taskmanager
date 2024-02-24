@@ -65,12 +65,25 @@ function TaskTable({ tableData }) {
   const getData = () => {
     if (sortColumn && sortType) {
       return currentData.sort((a, b) => {
-        const dateA = new Date(a[sortColumn]);
-        const dateB = new Date(b[sortColumn]);
-        if (sortType === 'asc') {
-          return dateA - dateB;
+        let x
+        let y
+        if (sortColumn === 'start_date' || sortColumn === 'due_date') {
+          x = new Date(a[sortColumn]);
+          y = new Date(b[sortColumn]);
         } else {
-          return dateB - dateA;
+          x = a[sortColumn];
+          y = b[sortColumn];
+        }
+        if (typeof x === 'string') {
+          x = x.charCodeAt();
+        }
+        if (typeof y === 'string') {
+          y = y.charCodeAt();
+        }
+        if (sortType === 'asc') {
+          return x - y;
+        } else {
+          return y - x;
         }
       })
     }
@@ -141,14 +154,14 @@ function TaskTable({ tableData }) {
             <Cell dataKey="title" />
           </Column>
 
-          <Column width={250} resizable sortable>
+          <Column width={200} resizable sortable>
             <HeaderCell className='text-sm'>
               Start Date
             </HeaderCell>
             <DateCell dataKey={'start_date'} />
           </Column>
 
-          <Column width={250} resizable sortable>
+          <Column width={200} resizable sortable>
             <HeaderCell className='text-sm'>
               Due Date
             </HeaderCell>
