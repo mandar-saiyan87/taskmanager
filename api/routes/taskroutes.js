@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id
     const deleteTask = await sql`delete from tskmgr.tasks where id=${id} returning id`
     if (deleteTask[0].id) {
-      res.status(200).json({ 'code': 200, 'msg': 'Task deleted successfully' })
+      res.status(200).json({ 'code': 200, 'msg': 'Task deleted successfully', 'taskId': deleteTask[0].id })
     }
   } catch (error) {
     console.log(error.message);

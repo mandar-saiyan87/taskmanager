@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getAlltasks, rstMsgErr } from "../store/taskSlice"
 import TaskTable from '../components/TaskTable'
 import TaskModal from '../components/TaskModal'
+import MessageModal from '../components/MessageModal'
 
 function HomePage() {
 
@@ -13,6 +14,8 @@ function HomePage() {
   const dispatch = useDispatch()
 
   const [taskModal, setTaskModal] = useState(false)
+  const [modalmsg, setModalmsg] = useState(false)
+
 
   useEffect(() => {
     dispatch(getAlltasks())
@@ -31,15 +34,16 @@ function HomePage() {
             <Spinner size="35" color="#25005a" />
           </div>
           }
-          {!data.loading && data.error ? <div>{data.error.message}</div> : null}
-          {!data.loading && !data.error && data.tasks?.length > 0 ?
+          {!data.loading && data.error ? <div className='flex items-center justify-center m-auto'>{data.error.message}</div> : null}
+          {!data.loading && data.tasks?.length > 0 ?
             (
-              <TaskTable tableData={data.tasks} />
-            )
-            : data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
+              <TaskTable tableData={data.tasks} setOpen={setModalmsg} />
+            ) :
+            data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
           }
         </div>
         {taskModal && <TaskModal open={taskModal} handleClose={setTaskModal} />}
+        {modalmsg && <MessageModal isOpen={modalmsg} setOpen={ setModalmsg} />}
 
       </div>
     </>

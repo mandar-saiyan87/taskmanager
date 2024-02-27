@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Whisper, IconButton, Popover, Dropdown } from 'rsuite';
+import { Table, Whisper, IconButton, Popover, Dropdown, Pagination } from 'rsuite';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import { format } from 'date-fns'
+import { useDispatch } from 'react-redux'
+import { deleteTask } from '../store/taskSlice';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -25,22 +27,29 @@ const StatusCell = ({ rowData, dataKey, ...props }) => {
   )
 }
 
-const renderMenu = ({ onClose, left, top, className }, ref) => {
-  const handleSelect = eventKey => {
-    onClose();
-    console.log(eventKey);
-  };
-  return (
-    <Popover ref={ref} className={className} style={{ left, top }} full>
-      <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey={1}>Edit</Dropdown.Item>
-        <Dropdown.Item eventKey={2}>Delete</Dropdown.Item>
-      </Dropdown.Menu>
-    </Popover>
-  );
-};
 
-const ActionCell = ({ rowData, dataKey, ...props }) => {
+const ActionCell = ({ rowData, dataKey, handleDel, onOpen, ...props }) => {
+  const renderMenu = ({ onClose, left, top, className }, ref) => {
+    const handleSelect = eventKey => {
+      onClose();
+    };
+
+    function handleDelete() {
+      onOpen(true)
+      handleDel(rowData.id)
+      onClose()
+    }
+
+    return (
+      <Popover ref={ref} className={className} style={{ left, top }} full>
+        <Dropdown.Menu onSelect={handleSelect}>
+          <Dropdown.Item eventKey={1}>Edit</Dropdown.Item>
+          <Dropdown.Item eventKey={2} onClick={handleDelete}>Delete</Dropdown.Item>
+        </Dropdown.Menu>
+      </Popover>
+    );
+  };
+
   return (
     <Cell {...props} style={{ display: 'flex' }}>
       <Whisper placement="autoVerticalStart" trigger="click" speaker={renderMenu}>
@@ -51,7 +60,9 @@ const ActionCell = ({ rowData, dataKey, ...props }) => {
 };
 
 
-function TaskTable({ tableData }) {
+function TaskTable({ tableData, setOpen }) {
+
+  const dispatch = useDispatch()
 
   let data = tableData
 
@@ -60,10 +71,33 @@ function TaskTable({ tableData }) {
   const [sortType, setSortType] = useState();
   const [loading, setLoading] = useState(false);
   const [currentStatus, setCurrentStatus] = useState('All')
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1)
 
 
-  const getData = () => {
+  const handleChangeLimit = dataKey => {
+    setPage(1);
+    setLimit(dataKey);
+  }
+
+  const viewData = currentData.filter((v, i) => {
+    const start = limit * (page - 1);
+    const end = start + limit;
+    return i >= start && i < end;
+  });
+
+
+  const handleSortColumn = (sortColumn, sortType) => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+      setSortColumn(sortColumn);
+      setSortType(sortType);
+    }, 500);
+
+    // console.log(sortColumn, sortType)
     if (sortColumn && sortType) {
+      setLoading(true)
       return currentData.sort((a, b) => {
         let x
         let y
@@ -87,16 +121,8 @@ function TaskTable({ tableData }) {
         }
       })
     }
-    return currentData;
-  };
-
-  const handleSortColumn = (sortColumn, sortType) => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSortColumn(sortColumn);
-      setSortType(sortType);
-    }, 500);
+    // return currentData;
+    setCurrentData([...currentData])
   };
 
   function setStatusData(cstate) {
@@ -111,6 +137,10 @@ function TaskTable({ tableData }) {
     }
   }
 
+  function handleTaskDelete(id) {
+    dispatch(deleteTask(id))
+    // console.log(id, 'delete task')
+  }
 
   return (
     <>
@@ -132,8 +162,8 @@ function TaskTable({ tableData }) {
         </div>
 
         <Table
-          height={450}
-          data={getData()}
+          height={400}
+          data={viewData}
           rowHeight={50}
           sortColumn={sortColumn}
           sortType={sortType}
@@ -171,9 +201,28 @@ function TaskTable({ tableData }) {
           <Column width={150} resizable>
             <HeaderCell>
             </HeaderCell>
-            <ActionCell dataKey="id" />
+            <ActionCell dataKey="id" handleDel={handleTaskDelete} onOpen={setOpen} />
           </Column>
         </Table>
+        <div style={{ padding: 20 }}>
+          <Pagination
+            prev
+            next
+            first
+            last
+            ellipsis
+            boundaryLinks
+            maxButtons={5}
+            size="sm"
+            layout={['total', '-', 'limit', '|', 'pager', 'skip']}
+            total={currentData.length}
+            limitOptions={[10, 30, 50]}
+            limit={limit}
+            activePage={page}
+            onChangePage={setPage}
+            onChangeLimit={handleChangeLimit}
+          />
+        </div>
       </div>
     </>
   )

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Modal, DatePicker, SelectPicker } from 'rsuite';
 import { useSelector, useDispatch } from 'react-redux'
-import { addNewTask, rstMsgErr } from '../store/taskSlice'
+import { addNewTask, rstMsgErr, getAlltasks } from '../store/taskSlice'
 import Spinner from './Spinner';
 
 
 
-const dropDown = ['todo', 'pending', 'in progress', 'complete', 'bug', 'blocked'].map(
+const dropDown = ['todo', 'pending', 'in progress', 'completed', 'bug', 'blocked'].map(
   item => ({ label: item, value: item })
 );
 
@@ -29,19 +29,21 @@ function TaskModal({ open, handleClose }) {
     status
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault()
     dispatch(addNewTask(newTask))
-    setTitle('')
-    setDescription('')
-    setstartDate(new Date())
-    setdueDate(new Date())
-    setStatus('')
-    setTimeout(() => {
-      dispatch(rstMsgErr())
-    }, 3000);
+    if (!data.error) {
+      setTimeout(() => {
+        dispatch(rstMsgErr())
+        handleClose(false)
+      }, 3000);
+      setTitle('')
+      setDescription('')
+      setstartDate(new Date())
+      setdueDate(new Date())
+      setStatus('')
+    }
   }
-
-
 
   return (
     <>
@@ -70,13 +72,16 @@ function TaskModal({ open, handleClose }) {
               <SelectPicker searchable={false} label="Status" data={dropDown} style={{ width: 224 }} onChange={(value) => setStatus(value)} value={status} />
             </div>
           }
-          {data.error && <div>{data.error.message}</div>}
+          {data.error && <div className='flex items-center justify-center text-red-500 my-2'>{data.error.message}</div>}
         </Modal.Body>
         <Modal.Footer>
-          <div className='flex gap-4 items-center'>
-            <button className='text-white bg-[#25005a] font-medium px-3 py-2 rounded-lg active:opacity-70' onClick={handleSubmit}>Save</button>
-            <button className='bg-slate-300 font-medium px-3 py-2 rounded-lg active:opacity-70' onClick={() => handleClose(false)}>Cancel</button>
-          </div>
+          {!data.loading && data.message ? '' :
+            <div className='flex gap-4 items-center'>
+              <button className='text-white bg-[#25005a] font-medium px-3 py-2 rounded-lg active:opacity-70' onClick={handleSubmit}>Save</button>
+              <button className='bg-slate-300 font-medium px-3 py-2 rounded-lg active:opacity-70' onClick={() => handleClose(false)}>Cancel</button>
+            </div>
+          }
+
         </Modal.Footer>
       </Modal>
     </>
