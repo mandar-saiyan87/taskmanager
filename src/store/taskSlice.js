@@ -26,6 +26,13 @@ export const deleteTask = createAsyncThunk("deletetask", async (id) => {
 })
 
 
+export const editTask = createAsyncThunk("editTask", async (taskItem) => {
+  const { taskId, newTask } = taskItem
+  const res = await axios.put(`http://127.0.0.1:5000/api/tasks/${taskId}`, newTask)
+  const result = res.data
+  return result
+})
+
 
 export const taskSlice = createSlice({
   name: 'task',
@@ -37,10 +44,8 @@ export const taskSlice = createSlice({
   },
   reducers: {
     rstMsgErr: (state) => {
-      if (!state.error) {
-        state.message = ''
-        state.error = null
-      }
+      state.message = ''
+      state.error = null
     },
   },
   extraReducers: (builder) => {
@@ -85,6 +90,23 @@ export const taskSlice = createSlice({
         state.loading = false
         state.error = action.payload
         state.modal = true
+      })
+
+    builder.addCase(editTask.pending, (state) => {
+      state.loading = true
+    })
+      .addCase(editTask.fulfilled, (state, action) => {
+        state.loading = false
+        const updatedItem = action.payload.updatedTask
+        const edited = state.tasks.findIndex((item) => (
+          item.id === updatedItem.id
+        ))
+        state.tasks[edited] = updatedItem
+        state.message = action.payload.msg
+      })
+      .addCase(editTask.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error
       })
   }
 })

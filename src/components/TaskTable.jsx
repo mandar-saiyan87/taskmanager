@@ -28,7 +28,7 @@ const StatusCell = ({ rowData, dataKey, ...props }) => {
 }
 
 
-const ActionCell = ({ rowData, dataKey, handleDel, onOpen, ...props }) => {
+const ActionCell = ({ rowData, dataKey, handleDel, onOpen, openModal, ...props }) => {
   const renderMenu = ({ onClose, left, top, className }, ref) => {
     const handleSelect = eventKey => {
       onClose();
@@ -40,10 +40,15 @@ const ActionCell = ({ rowData, dataKey, handleDel, onOpen, ...props }) => {
       onClose()
     }
 
+    function handleEdit() {
+      openModal(rowData)
+      onClose()
+    }
+
     return (
       <Popover ref={ref} className={className} style={{ left, top }} full>
         <Dropdown.Menu onSelect={handleSelect}>
-          <Dropdown.Item eventKey={1}>Edit</Dropdown.Item>
+          <Dropdown.Item eventKey={1} onClick={handleEdit}>Edit</Dropdown.Item>
           <Dropdown.Item eventKey={2} onClick={handleDelete}>Delete</Dropdown.Item>
         </Dropdown.Menu>
       </Popover>
@@ -60,7 +65,7 @@ const ActionCell = ({ rowData, dataKey, handleDel, onOpen, ...props }) => {
 };
 
 
-function TaskTable({ tableData, setOpen }) {
+function TaskTable({ tableData, setOpen, taskOpen, currentTask }) {
 
   const dispatch = useDispatch()
 
@@ -181,7 +186,11 @@ function TaskTable({ tableData, setOpen }) {
             <HeaderCell className='text-sm'>
               Title
             </HeaderCell>
-            <Cell dataKey="title" />
+            <Cell className='hover:cursor-pointer'>
+              {
+                rowData => <div onClick={() => taskOpen(rowData)}>{rowData.title}</div>
+              }
+            </Cell>
           </Column>
 
           <Column width={200} resizable sortable>
@@ -201,7 +210,7 @@ function TaskTable({ tableData, setOpen }) {
           <Column width={150} resizable>
             <HeaderCell>
             </HeaderCell>
-            <ActionCell dataKey="id" handleDel={handleTaskDelete} onOpen={setOpen} />
+            <ActionCell dataKey="id" handleDel={handleTaskDelete} onOpen={setOpen} openModal={currentTask} />
           </Column>
         </Table>
         <div style={{ padding: 20 }}>

@@ -61,13 +61,13 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id
-    const task = req.body
-    const updateTask = await sql`update tskmgr.tasks set ${sql(task, 'title', 'description', 'start_date', 'due_date', 'status')}
+    const newTask = req.body
+    const updatedTask = await sql`update tskmgr.tasks set ${sql(newTask, 'title', 'description', 'start_date', 'due_date', 'status')}
     where id=${id}
-    returning id
+    returning *
     `
-    if (updateTask[0].id) {
-      res.status(200).json({ 'code': 200, 'msg': 'Task updated successfully' })
+    if (updatedTask[0].id) {
+      res.status(200).json({ 'code': 200, 'msg': 'Task updated successfully', 'updatedTask': updatedTask[0] })
     }
   } catch (error) {
     console.log(error.message);

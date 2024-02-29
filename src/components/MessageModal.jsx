@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal } from 'rsuite'
 import Spinner from './Spinner'
 import { useSelector, useDispatch } from 'react-redux'
