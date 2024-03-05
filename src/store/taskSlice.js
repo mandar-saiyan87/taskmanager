@@ -41,7 +41,7 @@ export const taskSlice = createSlice({
     loading: false,
     message: '',
     error: null,
-    viewType: true
+    viewType: false
   },
   reducers: {
     setView: (state) => {

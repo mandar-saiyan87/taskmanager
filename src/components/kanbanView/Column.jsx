@@ -1,7 +1,7 @@
 import React from 'react'
 import TaskCard from './TaskCard';
 
-function Column({ taskdata, column }) {
+function Column({ taskdata, column, handleTaskModal, handleTaskDetails, modalMsg }) {
 
   const colName = column.charAt(0).toUpperCase() + column.slice(1);
 
@@ -55,7 +55,7 @@ function Column({ taskdata, column }) {
         </div>
         <div>
           {taskdata.filter((task) => task.status === column).map((item) =>
-            <TaskCard taskDetails={item} bcolor={colColor} />
+            <TaskCard taskDetails={item} bcolor={colColor} key={item.id} handleTaskModal={handleTaskModal} handleTaskDetails={handleTaskDetails} modalMsg={modalMsg} />
           )}
 
         </div>
