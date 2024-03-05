@@ -1,8 +1,8 @@
 import React from 'react'
 import { Modal } from 'rsuite'
-import Spinner from './Spinner'
+import Spinner from '../Spinner'
 import { useSelector, useDispatch } from 'react-redux'
-import { rstMsgErr } from '../store/taskSlice'
+import { rstMsgErr } from '../../store/taskSlice'
 
 function MessageModal({ setOpen, isOpen }) {
 

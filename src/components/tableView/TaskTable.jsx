@@ -3,7 +3,7 @@ import { Table, Whisper, IconButton, Popover, Dropdown, Pagination } from 'rsuit
 import MoreIcon from '@rsuite/icons/legacy/More';
 import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
-import { deleteTask } from '../store/taskSlice';
+import { deleteTask } from '../../store/taskSlice';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -144,7 +144,6 @@ function TaskTable({ tableData, setOpen, taskOpen, currentTask }) {
 
   function handleTaskDelete(id) {
     dispatch(deleteTask(id))
-    // console.log(id, 'delete task')
   }
 
   return (

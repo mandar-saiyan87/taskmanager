@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, DatePicker, SelectPicker } from 'rsuite';
 import { useSelector, useDispatch } from 'react-redux'
-import { addNewTask, rstMsgErr, editTask } from '../store/taskSlice'
-import Spinner from './Spinner';
+import { addNewTask, rstMsgErr, editTask } from '../../store/taskSlice'
+import Spinner from '../Spinner';
 
 
 
