@@ -5,7 +5,38 @@ import { deleteTask } from '../../store/taskSlice'
 
 
 
-function TaskCard({ taskDetails, funcs }) {
+function TaskCard({ taskDetails, column, funcs }) {
+
+  let colColor = ''
+
+  switch (column) {
+    case 'todo':
+      colColor = '#7CB9E8'
+      break;
+
+    case 'pending':
+      colColor = 'black'
+      break;
+
+    case 'in progress':
+      colColor = '#bdbd44'
+      break;
+
+    case 'blocked':
+      colColor = '#D32F2F'
+      break;
+
+    case 'bug':
+      colColor = '#FFAB91'
+      break;
+
+    case 'completed':
+      colColor = '#33691E'
+      break;
+
+    default:
+      colColor = 'white';
+  }
 
   const { handleTaskModal, handleTaskDetails, modalMsg, cardRef } = funcs
 
@@ -47,7 +78,8 @@ function TaskCard({ taskDetails, funcs }) {
 
   return (
     <div
-      className='w-full bg-white flex flex-col gap-4 rounded-md shadow-md border-[1px] p-3 my-2.5 cursor-pointer'
+      className='w-full bg-white flex flex-col gap-4 rounded-md border-[1px] p-3 my-2.5 cursor-pointer'
+      style={{ borderColor: `${colColor}` }}
       draggable
       onDoubleClick={() => handleTaskDetails(taskDetails)}
       ref={cardRef}

@@ -36,7 +36,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
         {statusColumns.map((col) => (
           <Column column={col} key={col} props={{ cardRef, handleDrop }}>
             {data.filter((task) => task.status === col).map((item) => (
-              <TaskCard taskDetails={item} funcs={{ handleTaskModal, handleTaskDetails, cardRef, modalMsg }} key={item.id} />
+              <TaskCard taskDetails={item} funcs={{ handleTaskModal, handleTaskDetails, cardRef, modalMsg }} column={col} key={item.id} />
             ))}
           </Column>
         ))}

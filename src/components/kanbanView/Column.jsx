@@ -45,7 +45,7 @@ function Column({ children, column, props }) {
 
   return (
     <>
-      <div className='border-[1px] py-2 px-3' style={{ borderColor: `${colColor}` }}
+      <div
         onDragOver={(e) => e.preventDefault()}
         onDrop={() => handleDrop(cardRef.current, column)}
       >
