@@ -7,11 +7,12 @@
 
 @layer base {
   body {
-    @apply m-auto overflow-x-hidden font-Poppins
+    @apply m-auto font-Poppins
   }
 
   ::-webkit-scrollbar {
     width: 5px;
+    height: 7px;
   }
 
   /* Track */

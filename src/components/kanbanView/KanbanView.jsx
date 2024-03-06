@@ -10,8 +10,8 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
   const statusColumns = ['todo', 'pending', 'in progress', 'blocked', 'bug', 'completed']
 
   return (
-    <div>
-      <div className='grid grid-cols-4 gap-4 w-full mb-5'>
+    <div className='overflow-x-auto'>
+      <div className='grid grid-cols-4 gap-4 mb-5'>
         {statusColumns.map((col) => (
           <Column taskdata={data} column={col} key={col} handleTaskModal={handleTaskModal} handleTaskDetails={handleTaskDetails} modalMsg={modalMsg} />
         ))}
