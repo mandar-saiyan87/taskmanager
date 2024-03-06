@@ -41,7 +41,7 @@ export const taskSlice = createSlice({
     loading: false,
     message: '',
     error: null,
-    viewType: false
+    viewType: false,
   },
   reducers: {
     setView: (state) => {
@@ -116,4 +116,4 @@ export const taskSlice = createSlice({
 })
 
 export default taskSlice.reducer
-export const { rstMsgErr, setView } = taskSlice.actions
+export const { rstMsgErr, setView, setDragged } = taskSlice.actions

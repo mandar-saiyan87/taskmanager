@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { format } from 'date-fns'
-import { useDispatch } from 'react-redux';
-import { deleteTask } from '../../store/taskSlice';
+import { useDispatch } from 'react-redux'
+import { deleteTask } from '../../store/taskSlice'
 
 
-function TaskCard({ taskDetails, handleTaskModal, handleTaskDetails, modalMsg }) {
+
+function TaskCard({ taskDetails, funcs }) {
+
+  const { handleTaskModal, handleTaskDetails, modalMsg, cardRef } = funcs
 
   const [options, setOptions] = useState(false)
-  const dispatch = useDispatch()
 
-  const dropdownRef = useRef(null);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     function handleDropdownClick(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      if (cardRef.current && !cardRef.current.contains(e.target)) {
         setOptions(false)
       }
     }
@@ -44,7 +46,14 @@ function TaskCard({ taskDetails, handleTaskModal, handleTaskDetails, modalMsg })
 
 
   return (
-    <div className='w-full flex flex-col gap-4 rounded-md shadow-md border-[1px] p-3 my-2.5 cursor-pointer' onDoubleClick={() => handleTaskDetails(taskDetails)} ref={dropdownRef}>
+    <div
+      className='w-full bg-white flex flex-col gap-4 rounded-md shadow-md border-[1px] p-3 my-2.5 cursor-pointer'
+      draggable
+      onDoubleClick={() => handleTaskDetails(taskDetails)}
+      ref={cardRef}
+      onDragOver={(e) => e.preventDefault()}
+      onDragStart={() => cardRef.current = taskDetails.id}
+    >
       <div className='flex items-center justify-between'>
         <p className='font-semibold line-clamp-1'>{taskDetails.title}</p>
         <div className='flex flex-col items-center cursor-pointer max-w-max relative'>

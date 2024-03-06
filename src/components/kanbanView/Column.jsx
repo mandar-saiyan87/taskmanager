@@ -1,7 +1,11 @@
 import React from 'react'
 import TaskCard from './TaskCard';
+import { useSelector, useDispatch } from 'react-redux'
+import { editTask } from '../../store/taskSlice';
 
-function Column({ taskdata, column, handleTaskModal, handleTaskDetails, modalMsg }) {
+function Column({ children, column, props }) {
+
+  const { cardRef, handleDrop } = props
 
   const colName = column.charAt(0).toUpperCase() + column.slice(1);
 
@@ -38,26 +42,18 @@ function Column({ taskdata, column, handleTaskModal, handleTaskDetails, modalMsg
       colColor = 'white';
   }
 
-  const dummyTask = {
-    id: 1,
-    title: 'Dummy task',
-    description: 'Dummy description',
-    start_date: new Date(),
-    due_date: new Date(),
-    status: 'todo'
-  }
 
   return (
     <>
-      <div className='border-[1px] py-2 px-3' style={{ borderColor: `${colColor}` }}>
+      <div className='border-[1px] py-2 px-3' style={{ borderColor: `${colColor}` }}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={() => handleDrop(cardRef.current, column)}
+      >
         <div className='text-white font-semibold py-1 px-3 text-center rounded-md' style={{ backgroundColor: `${colColor}` }}>
           <p>{colName}</p>
         </div>
         <div>
-          {taskdata.filter((task) => task.status === column).map((item) =>
-            <TaskCard taskDetails={item} bcolor={colColor} key={item.id} handleTaskModal={handleTaskModal} handleTaskDetails={handleTaskDetails} modalMsg={modalMsg} />
-          )}
-
+          {children}
         </div>
       </div>
     </>

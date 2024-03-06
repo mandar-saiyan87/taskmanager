@@ -79,9 +79,10 @@ function HomePage() {
           </div>
         </div>
       </div>
+
       <div className='mt-20 md:mt-0 flex flex-col max-w-[1536px] px-5 mx-auto min-h-screen'>
         {data.viewType ?
-          <div className='max-w-7xl w-full mx-auto'>
+          <div className='max-w-7xl w-full mx-auto mt-12'>
             {data.loading && <div className='flex items-center justify-center m-auto'>
               <Spinner size="35" color="#25005a" />
             </div>
@@ -93,15 +94,10 @@ function HomePage() {
               ) :
               data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
             }
-
           </div> :
           <div className='w-[1500px] mx-auto mt-12 px-5 overflow-hidden'>
-            {data.loading && <div className='flex items-center justify-center m-auto'>
-              <Spinner size="35" color="#25005a" />
-            </div>
-            }
-            {!data.loading && data.error ? <div className='flex items-center justify-center m-auto'>{data.error.message}</div> : null}
-            {!data.loading && data.tasks?.length > 0 ?
+            {data.error ? <div className='flex items-center justify-center m-auto'>{data.error.message}</div> : null}
+            {data.tasks?.length > 0 ?
               (
                 <KanbanView handleTaskModal={handleTaskModal} handleTaskDetails={handleTaskDetails} modalMsg={setModalmsg} />
               ) :
