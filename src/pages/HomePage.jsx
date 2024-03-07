@@ -14,7 +14,6 @@ import KanbanView from '../components/kanbanView/KanbanView'
 function HomePage() {
 
   const data = useSelector((state) => state.task)
-  // console.log(data)
   const dispatch = useDispatch()
 
   const [taskModal, setTaskModal] = useState(false)
@@ -32,7 +31,7 @@ function HomePage() {
   function handleTaskDetails(task) {
     setTask(task)
     setTaskDetails(true)
-    // console.log(task)
+
   }
 
   // Open Modal Edit task

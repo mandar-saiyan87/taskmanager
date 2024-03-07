@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const getAlltasks = createAsyncThunk("getAllTasks", async () => {
-  const res = await axios.get(`http://127.0.0.1:5000/api/tasks`)
+  const res = await axios.get(`${import.meta.env.VITE_APP_API_SRV}/api/tasks`)
   const result = res.data
   return result
 })
 
 export const addNewTask = createAsyncThunk("addNewtask", async (task) => {
-  const res = await axios.post(`http://127.0.0.1:5000/api/tasks`, task, {
+  const res = await axios.post(`${import.meta.env.VITE_APP_API_SRV}/api/tasks`, task, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -19,7 +19,7 @@ export const addNewTask = createAsyncThunk("addNewtask", async (task) => {
 })
 
 export const deleteTask = createAsyncThunk("deletetask", async (id) => {
-  const res = await axios.delete(`http://127.0.0.1:5000/api/tasks/${id}`
+  const res = await axios.delete(`${import.meta.env.VITE_APP_API_SRV}/api/tasks/${id}`
   )
   const result = res.data
   return result
@@ -28,7 +28,7 @@ export const deleteTask = createAsyncThunk("deletetask", async (id) => {
 
 export const editTask = createAsyncThunk("editTask", async (taskItem) => {
   const { taskId, newTask } = taskItem
-  const res = await axios.put(`http://127.0.0.1:5000/api/tasks/${taskId}`, newTask)
+  const res = await axios.put(`${import.meta.env.VITE_APP_API_SRV}/api/tasks/${taskId}`, newTask)
   const result = res.data
   return result
 })

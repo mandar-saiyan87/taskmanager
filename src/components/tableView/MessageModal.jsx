@@ -21,8 +21,9 @@ function MessageModal({ setOpen, isOpen }) {
           <Spinner size="35" color="#25005a" />
         </div>}
         {!data.loading && data.message ? <div className='flex items-center justify-center text-center my-2'>{data.message}</div> :
-          !data.loading && data.error ? <div className='flex items-center justify-center text-center my-2'>{data.error.message}</div> :
-            <div className='flex items-center justify-center text-center my-2'>Processing request .....</div>}
+          !data.loading && data.error ? <div className='flex items-center justify-center text-center my-2'>{data.error.message}</div> : ''
+          // <div className='flex items-center justify-center text-center my-2'>Processing request .....</div>
+        }
       </Modal.Body>
       <Modal.Footer>
         <div className='flex items-center justify-center'>
