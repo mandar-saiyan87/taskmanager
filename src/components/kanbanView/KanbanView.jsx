@@ -32,7 +32,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
 
   return (
     <div className='overflow-x-auto'>
-      <div className='grid grid-cols-4 gap-4 mb-5'>
+      <div className='grid grid-cols-4 gap-4 mb-5 px-3'>
         {statusColumns.map((col) => (
           <Column column={col} key={col} props={{ cardRef, handleDrop }}>
             {data.filter((task) => task.status === col).map((item) => (

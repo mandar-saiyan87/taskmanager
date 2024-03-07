@@ -57,7 +57,7 @@ function HomePage() {
 
   return (
     <>
-      <div className='fixed w-full bg-white top-0 md:hidden'>
+      <div className='fixed w-full bg-white top-0 lg:hidden'>
         <Navbar />
         <div className='max-w-[1536px] flex items-center justify-between mt-4 mx-auto px-5'>
           <button className='text-white bg-[#25005a] text-sm rounded-md px-3 py-2 max-w-max active:opacity-75' onClick={handleaddNew}>+ Add New Task</button>
@@ -68,7 +68,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className='hidden md:block'>
+      <div className='hidden lg:block'>
         <Navbar />
         <div className='max-w-[1536px] flex items-center justify-between mt-4 mx-auto px-5'>
           <button className='text-white bg-[#25005a] text-sm rounded-md px-3 py-2 max-w-max active:opacity-75' onClick={handleaddNew}>+ Add New Task</button>
@@ -80,7 +80,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div className='mt-20 md:mt-0 flex flex-col max-w-[1536px] px-5 mx-auto min-h-screen'>
+      <div className='mt-20 lg:mt-0 flex flex-col max-w-[1536px] px-5 mx-auto min-h-screen'>
         {data.viewType ?
           <div className='max-w-7xl w-full mx-auto mt-12'>
             {data.loading && <div className='flex items-center justify-center m-auto'>
