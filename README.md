@@ -24,7 +24,7 @@ TaskMaster is a task management application that offers both table and kanban vi
 
 ## Technologies Used
 
-- **Frontend**: React.js (Vite), Tailwind CSS, RSuit
+- **Frontend**: React.js (Vite), Redux Toolkit, Tailwind CSS, RSuit
 - **Backend**: Node.js (Express)
 - **Database**: PostgreSQL (PERN stack) (Neon.tech)
 
