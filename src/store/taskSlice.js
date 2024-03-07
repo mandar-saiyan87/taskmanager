@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const getAlltasks = createAsyncThunk("getAllTasks", async () => {
-  const res = await axios.get('http://127.0.0.1:5000/api/tasks')
+  const res = await axios.get(`http://127.0.0.1:5000/api/tasks`)
   const result = res.data
   return result
 })
 
 export const addNewTask = createAsyncThunk("addNewtask", async (task) => {
-  const res = await axios.post('http://127.0.0.1:5000/api/tasks', task, {
+  const res = await axios.post(`http://127.0.0.1:5000/api/tasks`, task, {
     headers: {
       'Content-Type': 'application/json'
     }

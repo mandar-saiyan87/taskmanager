@@ -11,7 +11,7 @@ function TaskCard({ taskDetails, column, funcs }) {
 
   switch (column) {
     case 'todo':
-      colColor = '#7CB9E8'
+      colColor = '#4a62cc'
       break;
 
     case 'pending':

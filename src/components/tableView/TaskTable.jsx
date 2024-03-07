@@ -16,7 +16,7 @@ const DateCell = ({ rowData, dataKey, ...props }) => (
 const StatusCell = ({ rowData, dataKey, ...props }) => {
   return (
     <Cell {...props}>
-      {rowData.status === 'todo' ? (<div className={`bg-[#7CB9E8] px-2 py-1 max-w-max text-white text-xs rounded-md`}>{rowData.status}</div>) :
+      {rowData.status === 'todo' ? (<div className={`bg-[#4a62cc] px-2 py-1 max-w-max text-white text-xs rounded-md`}>{rowData.status}</div>) :
         rowData.status === 'pending' ? (<div className={`bg-black px-2 py-1 max-w-max text-white text-xs rounded-md`}>{rowData.status}</div>) :
           rowData.status === 'in progress' ? (<div className={`bg-[#bdbd44] px-2 py-1 max-w-max text-white text-xs rounded-md`}>{rowData.status}</div>) :
             rowData.status === 'blocked' ? (<div className={`bg-[#D32F2F] px-2 py-1 max-w-max text-white text-xs rounded-md`}>{rowData.status}</div>) :
