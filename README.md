@@ -4,6 +4,9 @@
 
 TaskMaster is a task management application that offers both table and kanban views to organize tasks effectively. It provides features like toggling between views, detailed task information display, and etc.
 
+## Live Link
+- [Task Master](https://taskmaster-2h3t.onrender.com/)
+
 ## Screenshots
 
 ### Table View
@@ -30,7 +33,9 @@ TaskMaster is a task management application that offers both table and kanban vi
 
 ## Limitations
 
-Currently not mobile responsive.
+- Currently not mobile responsive.
+- May experience slow / delayed response due to render.io free hosting with limited resources.
+- May need to refresh / reload page to view tasks until render.io service is up and running as render.io free service shuts down due to inactivity.
 
 ## Future Additions
 
