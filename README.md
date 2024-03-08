@@ -35,7 +35,7 @@ TaskMaster is a task management application that offers both table and kanban vi
 
 - Currently not mobile responsive.
 - May experience slow / delayed response due to render.io free hosting with limited resources.
-- May need to refresh / reload page to view tasks until render.io service is up and running as render.io free service shuts down due to inactivity.
+- May need to wait for few secs / refresh / reload page to view tasks until render.io service is up and running as render.io free service shuts down due to inactivity.
 
 ## Future Additions
 
