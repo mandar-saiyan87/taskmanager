@@ -7,7 +7,7 @@ import { editTask, rstMsgErr } from '../../store/taskSlice'
 function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
 
 
-  const data = useSelector((state) => state.task.tasks)
+  const data = useSelector((state) => state.task)
 
   const dispatch = useDispatch()
 
@@ -16,7 +16,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
   const statusColumns = ['todo', 'pending', 'in progress', 'blocked', 'bug', 'completed']
 
   function handleDrop(taskId, status) {
-    const cardTask = data.filter((currenttask) => currenttask.id === taskId)
+    const cardTask = data.tasks.filter((currenttask) => currenttask.id === taskId)
     if (cardTask[0].status != status) {
       const newTask = { ...cardTask[0], status: status }
       modalMsg(true)
@@ -24,6 +24,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
       if (!data.error) {
         setTimeout(() => {
           dispatch(rstMsgErr())
+          modalMsg(false)
         }, 3000);
       }
     }
@@ -35,7 +36,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
       <div className='grid grid-cols-4 gap-4 mb-5 px-3'>
         {statusColumns.map((col) => (
           <Column column={col} key={col} props={{ cardRef, handleDrop }}>
-            {data.filter((task) => task.status === col).map((item) => (
+            {data.tasks.filter((task) => task.status === col).map((item) => (
               <TaskCard taskDetails={item} funcs={{ handleTaskModal, handleTaskDetails, cardRef, modalMsg }} column={col} key={item.id} />
             ))}
           </Column>

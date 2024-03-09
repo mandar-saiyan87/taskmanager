@@ -73,6 +73,7 @@ function TaskCard({ taskDetails, column, funcs }) {
     e.stopPropagation()
     modalMsg(true)
     dispatch(deleteTask(taskDetails.id))
+    
   }
 
 

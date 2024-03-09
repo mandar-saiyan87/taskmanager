@@ -67,7 +67,7 @@ function TaskModal({ open, handleClose, currentTask }) {
     if (!data.error) {
       setTimeout(() => {
         dispatch(rstMsgErr())
-        handleClose()
+        // handleClose()
       }, 3000);
     }
   }
