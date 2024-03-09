@@ -44,6 +44,7 @@ function TaskModal({ open, handleClose, currentTask }) {
     status
   }
 
+  // Create New Task function
   function handleSubmit(e) {
     e.preventDefault()
     dispatch(addNewTask(newTask))
@@ -60,6 +61,7 @@ function TaskModal({ open, handleClose, currentTask }) {
     }
   }
 
+  // Update existing Task function
   function handleUpdate(e) {
     e.preventDefault()
     // console.log(newTask)

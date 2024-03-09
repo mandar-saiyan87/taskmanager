@@ -12,7 +12,6 @@ function Column({ children, column, props }) {
   // console.log(taskdata)
 
   let colColor = ''
-
   switch (column) {
     case 'todo':
       colColor = '#4a62cc'

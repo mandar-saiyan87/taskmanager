@@ -104,7 +104,7 @@ function HomePage() {
             }
           </div>
         }
-
+        {/* Task edit,New Add and Message Modals */}
         {taskModal && <TaskModal open={taskModal} handleClose={handleCloseTask} currentTask={task} />}
         {modalmsg && <MessageModal isOpen={modalmsg} setOpen={setModalmsg} />}
         {taskDetails && <TaskDetails tskDetails={task} handleClose={setTaskDetails} />}

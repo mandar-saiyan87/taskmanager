@@ -63,18 +63,17 @@ function TaskCard({ taskDetails, column, funcs }) {
     setOptions(!options)
   }
 
+
   function handleEditTask(e) {
     e.stopPropagation()
     handleTaskModal(taskDetails)
     setOptions(false)
   }
 
-  // function handleDelete(e) {
-  //   e.stopPropagation()
-  //   modalMsg(true)
-  //   dispatch(deleteTask(taskDetails.id))
-
-  // }
+  function handleDelete(e) {
+    handleDeleteTask(taskDetails.id)
+    setOptions(false)
+  }
 
 
   return (
@@ -99,7 +98,7 @@ function TaskCard({ taskDetails, column, funcs }) {
             <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={handleEditTask}>
               <p>Edit</p>
             </div>
-            <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={() => handleDeleteTask(taskDetails.id)}>
+            <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={handleDelete}>
               <p>Delete</p>
             </div>
           </div>}

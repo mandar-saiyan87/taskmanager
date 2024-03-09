@@ -7,12 +7,14 @@ import { deleteTask, rstMsgErr } from '../../store/taskSlice';
 
 const { Column, HeaderCell, Cell } = Table;
 
+// Task Data Date component
 const DateCell = ({ rowData, dataKey, ...props }) => (
   <Cell {...props}>
     <p>{format(new Date(rowData.start_date), 'dd-MM-yyyy')}</p>
   </Cell>
 );
 
+// Task Data Status component
 const StatusCell = ({ rowData, dataKey, ...props }) => {
   return (
     <Cell {...props}>
@@ -27,7 +29,7 @@ const StatusCell = ({ rowData, dataKey, ...props }) => {
   )
 }
 
-
+// Task Data Action Cell component
 const ActionCell = ({ rowData, dataKey, handleTaskDelete, currentTask, ...props }) => {
   const renderMenu = ({ onClose, left, top, className }, ref) => {
     const handleSelect = eventKey => {
@@ -81,18 +83,20 @@ function TaskTable({ modalMsg, taskOpen, currentTask }) {
   const [page, setPage] = useState(1)
 
 
+  // Number of task per page
   const handleChangeLimit = dataKey => {
     setPage(1);
     setLimit(dataKey);
   }
 
+  // Pagination function
   const viewData = currentData.filter((v, i) => {
     const start = limit * (page - 1);
     const end = start + limit;
     return i >= start && i < end;
   });
 
-
+  // Date column sort function
   const handleSortColumn = (sortColumn, sortType) => {
     setLoading(true)
     setTimeout(() => {
@@ -143,6 +147,7 @@ function TaskTable({ modalMsg, taskOpen, currentTask }) {
     }
   }
 
+  // Delete Task
   function handleTaskDelete(id) {
     modalMsg(true)
     dispatch(deleteTask(id))

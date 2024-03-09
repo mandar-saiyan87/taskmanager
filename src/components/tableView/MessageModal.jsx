@@ -9,10 +9,6 @@ function MessageModal({ setOpen, isOpen }) {
   const data = useSelector((state) => state.task)
   const dispatch = useDispatch()
 
-  function handleClose() {
-    dispatch(rstMsgErr())
-    setOpen(false)
-  }
 
   return (
     <Modal size={400} open={isOpen} onClose={handleClose}>
@@ -22,7 +18,6 @@ function MessageModal({ setOpen, isOpen }) {
         </div>}
         {!data.loading && data.message ? <div className='flex items-center justify-center text-center my-2'>{data.message}</div> :
           !data.loading && data.error ? <div className='flex items-center justify-center text-center my-2'>{data.error.message}</div> : ''
-          // <div className='flex items-center justify-center text-center my-2'>Processing request .....</div>
         }
       </Modal.Body>
     </Modal>

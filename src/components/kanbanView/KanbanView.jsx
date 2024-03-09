@@ -15,6 +15,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
 
   const statusColumns = ['todo', 'pending', 'in progress', 'blocked', 'bug', 'completed']
 
+  // Card drag and drop function
   function handleDrop(taskId, status) {
     const cardTask = data.tasks.filter((currenttask) => currenttask.id === taskId)
     if (cardTask[0].status != status) {
@@ -30,6 +31,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
     }
   }
 
+  // Delete Task function
   function handleDeleteTask(id) {
     modalMsg(true)
     dispatch(deleteTask(id))
