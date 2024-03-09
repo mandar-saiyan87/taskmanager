@@ -94,7 +94,7 @@ function HomePage() {
               data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
             }
           </div> :
-          <div className='w-[1500px] mx-auto mt-12 px-3 overflow-hidden'>
+          <div className='min-w-[1024px] mx-auto mt-12 px-2 overflow-hidden'>
             {data.error ? <div className='flex items-center justify-center m-auto'>{data.error.message}</div> : null}
             {data.tasks?.length > 0 ?
               (
