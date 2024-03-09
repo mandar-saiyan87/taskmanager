@@ -92,7 +92,7 @@ export const taskSlice = createSlice({
       })
       .addCase(deleteTask.rejected, (state, action) => {
         state.loading = false
-        state.error = action.payload
+        state.error = action.error
         state.modal = true
       })
 

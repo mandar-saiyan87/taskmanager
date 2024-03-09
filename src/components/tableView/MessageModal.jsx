@@ -25,12 +25,6 @@ function MessageModal({ setOpen, isOpen }) {
           // <div className='flex items-center justify-center text-center my-2'>Processing request .....</div>
         }
       </Modal.Body>
-      <Modal.Footer>
-        <div className='flex items-center justify-center'>
-          {!data.loading && <button className='text-white bg-[#25005a] font-medium px-3 py-2 rounded-lg cursor-pointer active:opacity-70' onClick={handleClose}>Ok</button>}
-
-        </div>
-      </Modal.Footer>
     </Modal>
   )
 }

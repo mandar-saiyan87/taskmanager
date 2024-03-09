@@ -89,7 +89,7 @@ function HomePage() {
             {!data.loading && data.error ? <div className='flex items-center justify-center m-auto'>{data.error.message}</div> : null}
             {!data.loading && data.tasks?.length > 0 ?
               (
-                <TaskTable tableData={data.tasks} setOpen={setModalmsg} taskOpen={handleTaskDetails} currentTask={handleTaskModal} />
+                <TaskTable modalMsg={setModalmsg} taskOpen={handleTaskDetails} currentTask={handleTaskModal} />
               ) :
               data.tasks?.length === 0 && <div className='w-full m-auto flex items-center justify-center'>No tasks to display for now!</div>
             }

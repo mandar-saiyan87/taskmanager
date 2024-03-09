@@ -38,7 +38,7 @@ function TaskCard({ taskDetails, column, funcs }) {
       colColor = 'white';
   }
 
-  const { handleTaskModal, handleTaskDetails, modalMsg, cardRef } = funcs
+  const { handleTaskModal, handleTaskDetails, handleDeleteTask, cardRef } = funcs
 
   const [options, setOptions] = useState(false)
 
@@ -69,12 +69,12 @@ function TaskCard({ taskDetails, column, funcs }) {
     setOptions(false)
   }
 
-  function handleDelete(e) {
-    e.stopPropagation()
-    modalMsg(true)
-    dispatch(deleteTask(taskDetails.id))
-    
-  }
+  // function handleDelete(e) {
+  //   e.stopPropagation()
+  //   modalMsg(true)
+  //   dispatch(deleteTask(taskDetails.id))
+
+  // }
 
 
   return (
@@ -99,7 +99,7 @@ function TaskCard({ taskDetails, column, funcs }) {
             <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={handleEditTask}>
               <p>Edit</p>
             </div>
-            <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={handleDelete}>
+            <div className='flex items-center justify-center px-3 py-1 cursor-pointer hover:bg-blue-200 hover:text-blue-500' onClick={() => handleDeleteTask(taskDetails.id)}>
               <p>Delete</p>
             </div>
           </div>}

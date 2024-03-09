@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Column from './Column'
 import TaskCard from './TaskCard'
-import { editTask, rstMsgErr } from '../../store/taskSlice'
+import { editTask, rstMsgErr, deleteTask } from '../../store/taskSlice'
 
 function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
 
@@ -28,7 +28,17 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
         }, 3000);
       }
     }
+  }
 
+  function handleDeleteTask(id) {
+    modalMsg(true)
+    dispatch(deleteTask(id))
+    if (!data.error) {
+      setTimeout(() => {
+        dispatch(rstMsgErr())
+        modalMsg(false)
+      }, 3000);
+    }
   }
 
   return (
@@ -37,7 +47,7 @@ function KanbanView({ handleTaskModal, handleTaskDetails, modalMsg }) {
         {statusColumns.map((col) => (
           <Column column={col} key={col} props={{ cardRef, handleDrop }}>
             {data.tasks.filter((task) => task.status === col).map((item) => (
-              <TaskCard taskDetails={item} funcs={{ handleTaskModal, handleTaskDetails, cardRef, modalMsg }} column={col} key={item.id} />
+              <TaskCard taskDetails={item} funcs={{ handleTaskModal, handleTaskDetails, handleDeleteTask, cardRef }} column={col} key={item.id} />
             ))}
           </Column>
         ))}

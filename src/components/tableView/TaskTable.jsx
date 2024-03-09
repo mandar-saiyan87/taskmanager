@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Table, Whisper, IconButton, Popover, Dropdown, Pagination } from 'rsuite';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import { format } from 'date-fns'
-import { useDispatch } from 'react-redux'
-import { deleteTask } from '../../store/taskSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteTask, rstMsgErr } from '../../store/taskSlice';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -28,20 +28,19 @@ const StatusCell = ({ rowData, dataKey, ...props }) => {
 }
 
 
-const ActionCell = ({ rowData, dataKey, handleDel, onOpen, openModal, ...props }) => {
+const ActionCell = ({ rowData, dataKey, handleTaskDelete, currentTask, ...props }) => {
   const renderMenu = ({ onClose, left, top, className }, ref) => {
     const handleSelect = eventKey => {
       onClose();
     };
 
     function handleDelete() {
-      onOpen(true)
-      handleDel(rowData.id)
+      handleTaskDelete(rowData.id)
       onClose()
     }
 
     function handleEdit() {
-      openModal(rowData)
+      currentTask(rowData)
       onClose()
     }
 
@@ -65,11 +64,13 @@ const ActionCell = ({ rowData, dataKey, handleDel, onOpen, openModal, ...props }
 };
 
 
-function TaskTable({ tableData, setOpen, taskOpen, currentTask }) {
+function TaskTable({ modalMsg, taskOpen, currentTask }) {
+
+  const storeData = useSelector((state) => state.task)
 
   const dispatch = useDispatch()
 
-  let data = tableData
+  let data = storeData.tasks
 
   const [currentData, setCurrentData] = useState([...data])
   const [sortColumn, setSortColumn] = useState();
@@ -143,7 +144,14 @@ function TaskTable({ tableData, setOpen, taskOpen, currentTask }) {
   }
 
   function handleTaskDelete(id) {
+    modalMsg(true)
     dispatch(deleteTask(id))
+    if (!storeData.error) {
+      setTimeout(() => {
+        dispatch(rstMsgErr())
+        modalMsg(false)
+      }, 3000);
+    }
   }
 
   return (
@@ -209,7 +217,7 @@ function TaskTable({ tableData, setOpen, taskOpen, currentTask }) {
           <Column width={150} resizable>
             <HeaderCell>
             </HeaderCell>
-            <ActionCell dataKey="id" handleDel={handleTaskDelete} onOpen={setOpen} openModal={currentTask} />
+            <ActionCell dataKey="id" handleTaskDelete={handleTaskDelete} currentTask={currentTask} />
           </Column>
         </Table>
         <div style={{ padding: 20 }}>
