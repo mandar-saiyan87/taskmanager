@@ -11,7 +11,7 @@ function MessageModal({ setOpen, isOpen }) {
 
 
   return (
-    <Modal size={400} open={isOpen} onClose={handleClose}>
+    <Modal size={400} open={isOpen} onClose={() => setOpen(false)}>
       <Modal.Body>
         {data.loading && <div className='flex items-center justify-center m-auto'>
           <Spinner size="35" color="#25005a" />
